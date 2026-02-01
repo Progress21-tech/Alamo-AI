@@ -1,0 +1,8 @@
+{
+  "name": "alamo ai",
+  "description": "A resilient AI STEM tutor for WAEC/JAMB students in Nigeria, featuring offline-first learning, gamified rewards, and Yoruba-Glish interaction.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

@@ -1,0 +1,22 @@
+
+{
+  "short_name": "alamo ai",
+  "name": "alamo ai",
+  "icons": [
+    {
+      "src": "https://picsum.photos/192/192",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://picsum.photos/512/512",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "background_color": "#008751",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#008751"
+}
