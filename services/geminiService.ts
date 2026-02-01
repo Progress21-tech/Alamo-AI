@@ -25,9 +25,10 @@ Keep answers concise, focus on exam-readiness, and always maintain your 'Alámò
 export async function askAlamo(prompt: string, subject: string, chatHistory: any[] = []) {
   const apiKey = process.env.API_KEY;
   
-  if (!apiKey) {
-    console.error("ALÁMÒ ERROR: API_KEY is missing from process.env. If running locally, check index.html shim.");
-    return "Eyah! My brain is a bit empty right now because my API Key is missing. Please tell the developer to check the settings o!";
+  // Check for missing key or the deployment placeholder
+  if (!apiKey || apiKey === '__API_KEY__' || apiKey === '') {
+    console.error("ALÁMÒ ERROR: API_KEY is missing or was not replaced during deployment. Current key value:", apiKey);
+    return "Eyah! My brain is a bit empty right now because my API Key is missing. Please tell the developer to check the Vercel Build Command o!";
   }
 
   try {

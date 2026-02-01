@@ -8,11 +8,10 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     // Shim for process.env to make GenAI SDK work in standard browsers
+    // The placeholder '__API_KEY__' is replaced during deployment via build commands
     window.process = {
       env: {
-        // When running locally in VS Code, you can temporarily paste your key here 
-        // or set it via your local development server.
-        API_KEY: '' 
+        API_KEY: 'AIzaSyBDCGRpqwQpUtnsoQ6W7XrQOpyz_HJqzsk' 
       }
     };
 
