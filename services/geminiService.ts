@@ -30,7 +30,7 @@ export async function askAlamo(prompt: string, subject: string, chatHistory: any
     console.error("ALÁMÒ ERROR: API_KEY is missing or was not replaced during deployment. Current key value:", apiKey);
     return "Eyah! My brain is a bit empty right now because my API Key is missing. Please tell the developer to check the Vercel Build Command o!";
   }
-
+  
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
