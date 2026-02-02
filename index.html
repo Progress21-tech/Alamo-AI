@@ -7,11 +7,12 @@
   <title>Alámò AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Shim for process.env to make GenAI SDK work in standard browsers
-    // The placeholder '__API_KEY__' is replaced during deployment via build commands
+    // Shim for process.env to make GenAI SDK and Supabase work in standard browsers
     window.process = {
       env: {
-        API_KEY: 'AIzaSyBDCGRpqwQpUtnsoQ6W7XrQOpyz_HJqzsk' 
+        API_KEY: '__API_KEY__',
+        SUPABASE_URL: '__SUPABASE_URL__',
+        SUPABASE_ANON_KEY: '__SUPABASE_ANON_KEY__'
       }
     };
 
@@ -67,6 +68,7 @@
     "react": "https://esm.sh/react@^19.2.3",
     "react/": "https://esm.sh/react@^19.2.3/",
     "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@^2.48.1",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
   }
 }

@@ -1,8 +1,6 @@
-
 import { GoogleGenAI } from "@google/genai";
 
-const SYSTEM_INSTRUCTION = `
-You are 'Alámò', a world-class STEM tutor for SSS3 WAEC/JAMB students in Southwest Nigeria. 
+const SYSTEM_INSTRUCTION = `You are 'Alámò', a world-class STEM tutor for SSS3 WAEC/JAMB students in Southwest Nigeria. 
 Your personality: Empathetic, witty, culturally grounded, and extremely encouraging. 
 Language: Use "Yoruba-Glish" (English mixed with Yoruba). Use phrases like "Oshey!", "Sabi work!", "Gbayi!", "Opor!", "No be small thing o!", "O ya mi lenu!", or "Sharp guy/babe!".
 
@@ -22,22 +20,31 @@ If a student gets something right or shows understanding, use subject-specific s
 Keep answers concise, focus on exam-readiness, and always maintain your 'Alámò' (the wise one) persona.
 `;
 
-export async function askAlamo(prompt: string, subject: string, chatHistory: any[] = []) {
-  const apiKey = process.env.API_KEY;
-  
-  // Check for missing key or the deployment placeholder
-  if (!apiKey || apiKey === '__API_KEY__' || apiKey === '') {
-    console.error("ALÁMÒ ERROR: API_KEY is missing or was not replaced during deployment. Current key value:", apiKey);
-    return "Eyah! My brain is a bit empty right now because my API Key is missing. Please tell the developer to check the Vercel Build Command o!";
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
   }
-  
+
+  const { prompt, subject, chatHistory = [] } = req.body;
+  const apiKey = process.env.API_KEY;
+
+  if (!apiKey) {
+    return res.status(500).json({
+      error: "API_KEY missing on server"
+    });
+  }
+
   try {
     const ai = new GoogleGenAI({ apiKey });
+
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: "gemini-3-flash-preview",
       contents: [
         ...chatHistory,
-        { role: 'user', parts: [{ text: `Subject: ${subject}. Student Prompt: ${prompt}` }] }
+        {
+          role: "user",
+          parts: [{ text: `Subject: ${subject}. Student Prompt: ${prompt}` }]
+        }
       ],
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
@@ -45,9 +52,14 @@ export async function askAlamo(prompt: string, subject: string, chatHistory: any
       },
     });
 
-    return response.text || "Pele, my brain catch fire small. Oya, ask me again.";
-  } catch (error) {
-    console.error("Gemini Error:", error);
-    return "Eyah, my network is acting up like NEPA. Please check your data and try again in a bit!";
+    res.status(200).json({ text: response.text });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Gemini failed" });
   }
 }
+
+
+
+
+
