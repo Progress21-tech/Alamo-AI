@@ -94,7 +94,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
 
       {/* Footer */}
       <footer className="mt-auto py-10 px-6 text-center border-t border-gray-100 dark:border-white/5">
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-[4px]">EkoQuest Project &copy; 2025</p>
+        <p className="text-xs font-bold text-gray-400 uppercase tracking-[4px]">EkoQuest Project &copy; 2026</p>
       </footer>
     </div>
   );

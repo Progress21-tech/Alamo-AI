@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const SYSTEM_INSTRUCTION = `You are 'Alámò', a world-class STEM tutor for SSS3 WAEC/JAMB students in Southwest Nigeria. 
 Your personality: Empathetic, witty, culturally grounded, and extremely encouraging. 
@@ -20,46 +20,40 @@ If a student gets something right or shows understanding, use subject-specific s
 Keep answers concise, focus on exam-readiness, and always maintain your 'Alámò' (the wise one) persona.
 `;
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
-  const { prompt, subject, chatHistory = [] } = req.body;
-  const apiKey = process.env.API_KEY;
+if (!apiKey) {
+  console.error("VITE_GEMINI_API_KEY is missing in .env file");
+}
 
+export async function askAlamo(
+  prompt: string, 
+  subject: string, 
+  chatHistory: any[] = []
+): Promise<string> {
   if (!apiKey) {
-    return res.status(500).json({
-      error: "API_KEY missing on server"
-    });
+    throw new Error("API_KEY missing. Please add VITE_GEMINI_API_KEY to your .env file");
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey });
+    const genAI = new GoogleGenerativeAI(apiKey);
+    const model = genAI.getGenerativeModel({ 
+      model: "gemini-1.5-flash",
+      systemInstruction: SYSTEM_INSTRUCTION,
+    });
 
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: [
-        ...chatHistory,
-        {
-          role: "user",
-          parts: [{ text: `Subject: ${subject}. Student Prompt: ${prompt}` }]
-        }
-      ],
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
+    const chat = model.startChat({
+      history: chatHistory,
+      generationConfig: {
         temperature: 0.8,
       },
     });
 
-    res.status(200).json({ text: response.text });
+    const result = await chat.sendMessage(`Subject: ${subject}. Student Prompt: ${prompt}`);
+    const response = await result.response;
+    return response.text();
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Gemini failed" });
+    console.error("Gemini API Error:", err);
+    throw new Error("Failed to get response from Alámò");
   }
 }
-
-
-
-
-
