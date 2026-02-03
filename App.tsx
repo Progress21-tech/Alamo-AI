@@ -210,8 +210,13 @@ const App: React.FC = () => {
                 </div>
               </div>
               {session && (
-                <button onClick={handleLogout} className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white text-xl hover:bg-white/20 transition-all shadow-lg active:scale-95">
+                <button 
+                  onClick={handleLogout} 
+                  title="Sign Out"
+                  className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white text-xl hover:bg-white/20 transition-all shadow-lg active:scale-95 group relative"
+                >
                   🚪
+                  <span className="absolute -bottom-10 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-[8px] font-black px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest whitespace-nowrap pointer-events-none">Logout</span>
                 </button>
               )}
             </div>
@@ -227,6 +232,7 @@ const App: React.FC = () => {
               setActiveSubject(sub);
             }} 
             onReset={handleResetProgress} 
+            onLogout={handleLogout}
             onToggleNotifications={handleToggleNotifications}
             onUpdateReminderTime={handleUpdateReminderTime}
           />

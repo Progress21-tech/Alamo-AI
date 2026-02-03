@@ -9,6 +9,7 @@ interface DashboardProps {
   stats: UserStats;
   onSelectSubject: (subject: Subject) => void;
   onReset: () => void;
+  onLogout: () => void;
   onToggleNotifications?: () => void;
   onUpdateReminderTime?: (time: string) => void;
 }
@@ -18,6 +19,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   stats, 
   onSelectSubject, 
   onReset, 
+  onLogout,
   onToggleNotifications, 
   onUpdateReminderTime 
 }) => {
@@ -229,12 +231,21 @@ const Dashboard: React.FC<DashboardProps> = ({
               </div>
             </div>
 
-            <button 
-              onClick={onReset}
-              className="w-full mt-10 p-6 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 rounded-3xl border-2 border-dashed border-red-200 dark:border-red-900/40 font-black flex items-center justify-center gap-3 text-xs uppercase tracking-widest hover:bg-red-100 transition-colors"
-            >
-              <span>🧨</span> Erase My Data & Start Fresh
-            </button>
+            <div className="mt-10 space-y-4">
+              <button 
+                onClick={onLogout}
+                className="w-full p-6 bg-gray-50 dark:bg-white/5 text-gray-700 dark:text-gray-300 rounded-3xl border-2 border-gray-200 dark:border-white/10 font-black flex items-center justify-center gap-3 text-xs uppercase tracking-widest hover:bg-gray-100 dark:hover:bg-white/10 transition-colors shadow-sm"
+              >
+                <span>🚪</span> Sign Out (Logout from Lab)
+              </button>
+
+              <button 
+                onClick={onReset}
+                className="w-full p-6 bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 rounded-3xl border-2 border-dashed border-red-200 dark:border-red-900/40 font-black flex items-center justify-center gap-3 text-xs uppercase tracking-widest hover:bg-red-100 transition-colors"
+              >
+                <span>🧨</span> Erase My Data & Start Fresh
+              </button>
+            </div>
           </div>
         </div>
       </div>
