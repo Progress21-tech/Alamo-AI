@@ -30,10 +30,10 @@ Keep answers concise, focus on exam-readiness for WAEC/JAMB, and always maintain
 `;
 
 export async function askAlamo(prompt: string, subject: string, chatHistory: any[] = []) {
-  const apiKey = process.env.API_KEY;
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
   
   // Check for missing key or the deployment placeholder
-  if (!apiKey || apiKey === 'AIzaSyCwbFfd6wdh6PTW08sUTZ7fcwWcU46vwYQ' || apiKey === '') {
+  if (!apiKey || apiKey === '' || apiKey === '') {
     console.error("ALÁMÒ ERROR: API_KEY is missing or was not replaced during deployment.");
     return "Ẹ má bínú (I am sorry). My knowledge bank is currently disconnected because my API Key is missing. Please ask the developer to configure the environment correctly.";
   }
@@ -41,7 +41,7 @@ export async function askAlamo(prompt: string, subject: string, chatHistory: any
   try {
     const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: [
         ...chatHistory,
         { role: 'user', parts: [{ text: `Subject: ${subject}. Student Prompt: ${prompt}` }] }

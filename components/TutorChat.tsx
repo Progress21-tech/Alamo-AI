@@ -163,16 +163,17 @@ const TutorChat: React.FC<TutorChatProps> = ({ subject, user, streak, onBack, on
               </div>
             </div>
           ))}
-          {isLoading && (
-            <div className="flex items-center gap-3 px-4 py-2 bg-white/50 dark:bg-black/20 w-fit rounded-full backdrop-blur-md border border-white/50 dark:border-white/5">
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 bg-[#008751] rounded-full animate-bounce"></div>
-                <div className="w-2.5 h-2.5 bg-[#008751] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-                <div className="w-2.5 h-2.5 bg-[#008751] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-              </div>
-              <span className="text-[10px] font-black text-[#008751] dark:text-green-400 uppercase tracking-[2px]">Alámò is reasoning...</span>
-            </div>
-          )}
+          // In your chat component
+{isLoading && (
+  <div className="flex items-center gap-2 text-gray-500">
+    <div className="flex gap-1">
+      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+      <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+    </div>
+    <span>Alámò is thinking...</span>
+  </div>
+)}
           <div ref={scrollRef} />
 
           {/* Floating Praise Toast */}
