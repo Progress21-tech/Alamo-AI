@@ -7,14 +7,23 @@
   <title>Alámò AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Shim for process.env to make GenAI SDK and Supabase work in standard browsers
+    /**
+     * ENVIRONMENT CONFIGURATION
+     * These placeholders are replaced during the build/deployment process.
+     * Locally, you can replace them for testing, but DO NOT commit real keys to GitHub.
+     */
     window.process = {
       env: {
         API_KEY: '__API_KEY__',
-        SUPABASE_URL: '__SUPABASE_URL__',
-        SUPABASE_ANON_KEY: '__SUPABASE_ANON_KEY__'
+        SUPABASE_URL: 'https://yzlndhdmrxsyhcldcgyd.supabase.co',
+        SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl6bG5kaGRtcnhzeWhjbGRjZ3lkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwMzQ0ODksImV4cCI6MjA4NTYxMDQ4OX0.SagAsld0tIu0qsoWA_QcRNbtsAXeBlO7KuoM3IxMub4'
       }
     };
+
+    // Validation check to help developers
+    if (window.process.env.API_KEY === '__' + 'API_KEY' + '__') {
+      console.warn("Alámò AI: API keys are not set. If you are seeing this in production, your build command failed to inject the environment variables.");
+    }
 
     tailwind.config = {
       darkMode: 'class',
